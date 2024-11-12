@@ -1,0 +1,3 @@
+Nome: Alice, Idade: 30
+Nome: Bob, Idade: 25
+Nome: Carol, Idade: 35

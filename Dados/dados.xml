@@ -1,0 +1,14 @@
+<dados>
+    <pessoa>
+        <nome>Alice</nome>
+        <idade>30</idade>
+    </pessoa>
+    <pessoa>
+        <nome>Bob</nome>
+        <idade>25</idade>
+    </pessoa>
+    <pessoa>
+        <nome>Carol</nome>
+        <idade>35</idade>
+    </pessoa>
+</dados>
