@@ -1,0 +1,20 @@
+[
+    {
+        "produto": "Cadeira de Madeira",
+        "preco": 120.5,
+        "estoque": 25,
+        "categoria": "Móveis"
+    },
+    {
+        "produto": "Mesa de Vidro",
+        "preco": 300.0,
+        "estoque": 10,
+        "categoria": "Móveis"
+    },
+    {
+        "produto": "Sofá de Tecido",
+        "preco": 500.0,
+        "estoque": 5,
+        "categoria": "Estofados"
+    }
+]

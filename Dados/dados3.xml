@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<produtos><produto><nome>Televisão 42 polegadas</nome><preco>1500.00</preco><quantidade>8</quantidade><categoria>Eletrônicos</categoria></produto><produto><nome>Micro-ondas 20L</nome><preco>350.00</preco><quantidade>12</quantidade><categoria>Eletrodomésticos</categoria></produto><produto><nome>Notebook Gamer</nome><preco>3500.00</preco><quantidade>3</quantidade><categoria>Computadores</categoria></produto></produtos>

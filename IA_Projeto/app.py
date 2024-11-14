@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
+import google.generativeai as genai
 import json
 import pandas as pd
 import sqlite3
@@ -8,6 +9,7 @@ import xml.etree.ElementTree as ET
 
 app = Flask(__name__)
 CORS(app)
+genai.configure(api_key='AIzaSyDgaiDqmjd4aScETKWkChUjz8XsL7AlFKU')
 
 # Conectar ao banco de dados SQLite
 def init_db():
@@ -34,6 +36,65 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
+
+
+def classificar_conteudo_arquivo(conteudo):
+    try:
+        model = genai.GenerativeModel('gemini-1.0-pro')
+        prompt = f"Classifique o coteudo do arquivo e o que vc acha que são: '{conteudo[:500]}...'"
+
+        response = model.generate_content(prompt)
+        print(f"Resposta completa da API: {response}")
+
+        if response and hasattr(response, 'candidates') and len(response.candidates) > 0:
+            content = response.candidates[0].content
+            categoria = content.parts[0].text if content.parts else "Não foi possível classificar o conteúdo."
+        else:
+            categoria = "Não foi possível classificar o conteúdo."
+
+        return categoria
+    except Exception as e:
+        return f"Erro ao classificar o conteúdo: {str(e)}"
+
+
+@app.route('/classificar', methods=['POST'])
+def api_classificar():
+    if 'file' not in request.files:
+        return jsonify({"erro": "Nenhum arquivo enviado na requisição."}), 400
+
+    file = request.files['file']
+    format_type = file.filename.split('.')[-1]
+
+    # Processamento do arquivo conforme o tipo
+    try:
+        if format_type == 'csv':
+            data = pd.read_csv(file)
+        elif format_type == 'json':
+            data = pd.DataFrame(json.load(file))
+        elif format_type == 'xml':
+            tree = ET.parse(file)
+            root = tree.getroot()
+            all_records = []
+
+            for record in root:
+                record_data = {}
+                for item in record:
+                    record_data[item.tag] = item.text
+                all_records.append(record_data)
+
+            data = pd.DataFrame(all_records)
+        elif format_type == 'txt':
+            data = pd.read_csv(file, delimiter="\t")
+        else:
+            return jsonify({"erro": "Formato de arquivo não suportado."}), 400
+    except Exception as e:
+        return jsonify({"erro": f"Erro ao processar o arquivo: {str(e)}"}), 400
+
+    # Classificar o conteúdo do arquivo
+    conteudo = data.to_string()
+    categoria = classificar_conteudo_arquivo(conteudo)
+
+    return jsonify({"categoria": categoria})
 
 @app.route('/upload', methods=['POST'])
 def upload_file():

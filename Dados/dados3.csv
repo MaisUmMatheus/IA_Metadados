@@ -1,0 +1,5 @@
+id,produto,preco,quantidade,categoria
+1,Ar Condicionado,2500.0,15,Climatização
+2,Refrigerador,1800.0,5,Eletrodomésticos
+3,Fogão,750.0,20,Eletrodomésticos
+4,Secador de Cabelo,100.0,50,Cuidados Pessoais
