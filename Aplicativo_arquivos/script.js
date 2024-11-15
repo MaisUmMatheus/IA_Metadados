@@ -10,7 +10,7 @@ document.getElementById('uploadForm').onsubmit = async (event) => {
             method: 'POST',
             body: formData // Usa FormData diretamente no body
         });
-
+adadadada
         if (response.ok) {
             alert("Arquivo enviado com sucesso!");
             // Fazer a requisição para classificar o arquivo
